@@ -866,9 +866,605 @@ print("Is it a palindrome?", is_palindrome(word))  # Output: Is it a palindrome?
 ```python
 def capitalize_words(sentence):
     words = sentence.split()
-    capitalized_sentence
+    capitalized_sentence = ' '.join(word.capitalize() for word in words)
+    return capitalized_sentence
+
+# Test the function
+sentence = "python is awesome"
+print("Capitalized sentence:", capitalize_words(sentence))  # Output: Capitalized sentence: Python Is Awesome
 ```
+
 
 ### Additional Note:
 
 Understanding Python's built-in data structures is crucial for effectively working with data and solving various programming problems. By mastering these data structures and their operations, you can write cleaner, more efficient, and more maintainable code. Practice solving problems and implementing algorithms using these data structures to enhance your skills further.
+
+
+## 9 Algorithm: Draw Square
+
+Drawing a square is a fundamental geometric task in computer graphics and programming. In this algorithm, we'll outline the steps to draw a square given two points on a plane, labeled as P and Q.
+
+### Problem Statement:
+
+Given two points P and Q on a plane, draw a square with side length equal to the distance between points P and Q.
+
+### Pseudocode:
+
+```
+Algorithm: Draw Square
+
+Input: Two points on a plane, labeled P and Q.
+Output: Draw a square of side length |PQ|.
+
+1. Draw line L1 perpendicular to PQ passing through point P.
+2. Draw line L2 perpendicular to PQ passing through point Q.
+3. Choose a side H (half-space) of PQ.
+4. Mark point R on L1 such that |PR| = |PQ|.
+5. Mark point S on L2 such that |QS| = |PQ|.
+6. Draw PQRS to form the square.
+```
+
+### Python Code:
+
+```python
+import matplotlib.pyplot as plt
+
+def draw_square(P, Q):
+    plt.plot([P[0], Q[0]], [P[1], Q[1]], 'b--')  # Plot PQ line
+    plt.plot([P[0], P[0] + (Q[1] - P[1]), Q[0] + (Q[1] - P[1]), Q[0], P[0]], 
+             [P[1], P[1] - (Q[0] - P[0]), Q[1] - (Q[0] - P[0]), Q[1], P[1]], 'r-')  # Plot square
+    plt.plot(P[0], P[1], 'ko')  # Plot point P
+    plt.plot(Q[0], Q[1], 'ko')  # Plot point Q
+    plt.xlabel('X')
+    plt.ylabel('Y')
+    plt.title('Square with side length |PQ|')
+    plt.grid(True)
+    plt.axis('equal')
+    plt.show()
+
+# Example usage
+P = (1, 1)
+Q = (5, 4)
+draw_square(P, Q)
+```
+
+### Example:
+
+Let's consider an example with points P(1, 1) and Q(5, 4):
+
+- Distance between P and Q: |PQ| = sqrt((5-1)^2 + (4-1)^2) = sqrt(16 + 9) = sqrt(25) = 5
+
+Using the algorithm, we draw a square with side length 5 units.
+
+### Visualization:
+
+The code snippet provided visualizes the square formed by connecting points P and Q and drawing perpendicular lines from them to create a square.
+
+![DrawSquare](data/1_DrawSquare.png)
+
+This algorithm and code demonstrate a simple yet fundamental approach to drawing a square given two points on a plane. It forms the basis for more complex geometric algorithms and tasks.
+
+## 10. Finding \( a^n \) Efficiently
+
+In this topic, we'll discuss an efficient algorithm to compute the value of \( a^n \) where \( a \) is a given number and \( n \) is a non-negative integer. We'll explore a method that minimizes the number of multiplications required to calculate the result.
+
+### Problem Statement:
+
+Given a number \( a \) and a non-negative integer \( n \), find the value of \( a^n \).
+
+### Algorithm:
+
+To efficiently compute \( a^n \), we can utilize the concept of exponentiation by squaring. This algorithm reduces the number of multiplications required to calculate \( a^n \) by decomposing \( n \) into its binary representation.
+
+Here's the algorithm:
+
+1. Start with the base case: \( a^0 = 1 \).
+2. For each bit \( b_i \) in the binary representation of \( n \) (from least significant bit to most significant bit):
+   - If \( b_i = 1 \), multiply the result by \( a \).
+   - Square \( a \) for each iteration.
+3. Continue until all bits in the binary representation of \( n \) are processed.
+4. Return the final result.
+
+### Pseudocode:
+
+```
+Algorithm: EfficientExponentiation(a, n)
+
+Input: A number a, a non-negative integer n
+Output: a^n
+
+1. Let result = 1
+2. Iterate over each bit b_i in the binary representation of n:
+     a. If b_i is 1, multiply result by a
+     b. Square a for each iteration
+3. Return result
+```
+
+### Python Implementation:
+
+```python
+def efficient_exponentiation(a, n):
+    result = 1
+    while n > 0:
+        if n % 2 == 1:
+            result *= a
+        a *= a
+        n //= 2
+    return result
+
+# Example usage
+a = 2
+n = 5
+print("Result:", efficient_exponentiation(a, n))  # Output: Result: 32
+```
+
+### Explanation:
+
+The algorithm utilizes the binary representation of \( n \) to efficiently compute \( a^n \). By decomposing \( n \) into its binary form, the algorithm performs fewer multiplications compared to the straightforward approach of multiplying \( a \) by itself \( n \) times.
+
+### Complexity Analysis:
+
+The time complexity of this algorithm is \( O(\log n) \) because it performs \( O(\log n) \) iterations, where \( n \) is the exponent. This makes the algorithm significantly faster for large values of \( n \) compared to the naive approach.
+
+### Additional Note:
+
+Efficient exponentiation is a fundamental technique used in various computational tasks, including cryptography, number theory, and algorithm design. By leveraging the binary representation of exponents, programmers can optimize the performance of exponentiation operations, particularly for large exponent values.
+
+
+## 11. Greatest Common Divisor(GCD)
+
+### Problem Statement:
+
+The task is to find the Greatest Common Divisor (GCD) of two given integers \(a\) and \(b\).
+
+### Algorithm 1: Euclidean Algorithm
+
+The Euclidean Algorithm is a classical method to compute the GCD of two integers. It works on the principle that the GCD of \(a\) and \(b\) is equal to the GCD of \(b\) and the remainder when \(a\) is divided by \(b\), iteratively reducing the problem until the remainder becomes zero.
+
+#### Pseudocode:
+
+```
+Algorithm: EuclideanGCD(a, b)
+
+Input: Two positive integers 'a' and 'b'
+Output: GCD of 'a' and 'b'
+
+1. While 'b' is not 0:
+     a. Set a temporary variable 'temp' to 'b'
+     b. Set 'b' to the remainder when 'a' is divided by 'b'
+     c. Set 'a' to the value of 'temp'
+2. Return 'a'
+```
+
+#### Python Implementation:
+
+```python
+def euclidean_gcd(a, b):
+    while b != 0:
+        temp = b
+        b = a % b
+        a = temp
+    return a
+
+# Example usage
+num1 = 48
+num2 = 18
+print("GCD:", euclidean_gcd(num1, num2))  # Output: GCD: 6
+```
+
+### Algorithm 2: Recursive Euclidean Algorithm
+
+The recursive version of the Euclidean Algorithm provides an elegant approach to compute the GCD. It follows the same principle as the iterative version but utilizes recursion to handle the computation.
+
+#### Pseudocode:
+
+```
+Algorithm: RecursiveEuclideanGCD(a, b)
+
+Input: Two positive integers 'a' and 'b'
+Output: GCD of 'a' and 'b'
+
+1. If 'b' is 0, return 'a'
+2. Otherwise, recursively call RecursiveEuclideanGCD with parameters ('b', 'a % b')
+```
+
+#### Python Implementation:
+
+```python
+def recursive_euclidean_gcd(a, b):
+    if b == 0:
+        return a
+    else:
+        return recursive_euclidean_gcd(b, a % b)
+
+# Example usage
+num1 = 48
+num2 = 18
+print("GCD:", recursive_euclidean_gcd(num1, num2))  # Output: GCD: 6
+```
+
+### Explanation:
+
+Both algorithms employ the concept of reducing the problem into smaller instances until reaching the base case, where one of the numbers becomes zero. The iterative approach iteratively calculates the remainder, while the recursive approach elegantly handles the computation through recursive function calls.
+
+### Complexity Analysis:
+
+The time complexity of both algorithms is \(O(log min(a, b))\), where \(a\) and \(b\) are the input integers. This makes the Euclidean Algorithm highly efficient for computing the GCD of large numbers.
+
+### Additional Note:
+
+The GCD has numerous applications in mathematics and computer science, including simplifying fractions, solving linear Diophantine equations, and optimizing algorithms. Understanding efficient methods to compute the GCD is crucial for various computational tasks.
+
+
+## 12. Square Root of a Positive Integer
+
+### Problem Statement:
+
+Given a positive integer \( n \), find its square root \( \sqrt{n} \).
+
+### Algorithm: Newton-Raphson Method
+
+The Newton-Raphson method is an iterative algorithm used to approximate the roots of a real-valued function. To find the square root of a positive integer \( n \), we can use the following iterative formula:
+
+$$
+x_{i+1} = \frac{1}{2} \left( x_i + \frac{n}{x_i} \right)
+$$
+
+Where:
+- $( x_i )$ is the current approximation of the square root.
+- $( x_{i+1} )$ is the next approximation.
+- $( n )$ is the given positive integer.
+
+The algorithm iteratively refines the approximation of the square root until it converges to a satisfactory solution.
+
+#### Pseudocode:
+
+```
+Algorithm: SquareRoot(n)
+
+Input: A positive integer n
+Output: Approximate square root of n
+
+1. Initialize x as a rough approximation of the square root of n (e.g., x = n/2)
+2. Repeat until convergence:
+     a. Update x as: x = (1/2) * (x + n/x)
+3. Return the final value of x as the approximate square root of n
+```
+
+#### Python Implementation:
+
+```python
+def square_root(n):
+    x = n / 2  # Initial approximation
+    while True:
+        next_x = (x + n / x) / 2
+        if abs(next_x - x) < 1e-6:  # Check for convergence
+            return next_x
+        x = next_x
+
+# Example usage
+number = 25
+print("Square root of", number, ":", square_root(number))  # Output: Square root of 25 : 5.0
+```
+
+### Explanation:
+
+The algorithm starts with an initial approximation of the square root and iteratively refines it using the Newton-Raphson formula until convergence. Convergence is achieved when the difference between consecutive approximations is negligible.
+
+### Complexity Analysis:
+
+The Newton-Raphson method typically converges quickly, often requiring only a few iterations to reach a satisfactory solution. Therefore, the time complexity of the algorithm is considered efficient.
+
+### Additional Note:
+
+The Newton-Raphson method is a powerful technique for finding roots of equations and is widely used in numerical analysis and optimization. By applying this method, we can efficiently approximate the square root of a positive integer in programming applications.
+
+## 13. Computing Sine Function
+
+The sine function, denoted as \( \sin(x) \), is a fundamental trigonometric function that describes the relationship between the angles of a right triangle. In this topic, we'll discuss various methods to compute the sine function, focusing on the Taylor Series expansion approach.
+
+### Problem Statement:
+
+Given an angle \( x \) in radians, compute its sine value \( \sin(x) \).
+
+### Method: Taylor Series Expansion of Sine Function
+
+The sine function can be approximated using its Taylor Series expansion. The Taylor Series representation of \( \sin(x) \) is:
+
+$$ \sin(x) = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \ldots $$
+
+This infinite series converges for all real numbers \( x \).
+
+#### Pseudocode:
+
+```
+Algorithm: ComputeSine(x, n)
+
+Input: Angle x in radians, number of terms n
+Output: Approximate sine value of x
+
+1. Initialize result to 0.
+2. Iterate from i = 0 to n:
+     a. Calculate term as: term = (-1)^i * x^(2i+1) / (2i+1)!
+     b. Add term to result.
+3. Return result.
+```
+
+#### Python Implementation:
+
+```python
+import math
+
+def compute_sine(x, n):
+    result = 0
+    for i in range(n):
+        term = (-1) ** i * (x ** (2*i + 1)) / math.factorial(2*i + 1)
+        result += term
+    return result
+
+# Example usage
+angle = math.pi / 4  # 45 degrees in radians
+terms = 10  # Number of terms in Taylor Series
+print("Sine of", angle, ":", compute_sine(angle, terms))  # Output: Sine of 0.7853981633974483 : 0.7071067811865475
+```
+
+### Explanation:
+
+The algorithm approximates the sine function by summing a finite number of terms from its Taylor Series expansion. As more terms are included, the approximation becomes more accurate. The number of terms \( n \) determines the precision of the approximation.
+
+### Complexity Analysis:
+
+The time complexity of the algorithm depends on the number of terms \( n \) in the Taylor Series expansion. Calculating each term requires computing powers and factorials, both of which have time complexity \( O(n) \). Therefore, the overall time complexity of the algorithm is \( O(n^2) \).
+
+### Additional Note:
+
+The Taylor Series expansion provides a powerful tool for approximating various mathematical functions. By truncating the series at a finite number of terms, we can compute approximate values of functions like sine efficiently. This method is widely used in numerical analysis and scientific computing.
+
+## 14. Recursion
+
+Recursion is a powerful concept in computer science where a function calls itself to solve a problem by breaking it down into smaller, more manageable subproblems. In this discussion, we'll delve deeper into recursion, covering its principles, various examples, and tackling more complex problems.
+
+### Principles of Recursion:
+
+Recursion follows two fundamental principles:
+
+1. **Base Case:** A base case is the simplest scenario where the problem can be solved directly without further recursion. It serves as the stopping criterion for the recursive calls, preventing infinite recursion.
+
+2. **Recursive Case:** The recursive case defines how the problem is broken down into smaller subproblems. It involves calling the function recursively with modified parameters, gradually reducing the problem size until reaching the base case.
+
+### Example 1: Factorial Problem by Recursion
+
+Let's revisit the factorial problem as an example of recursion. The factorial of a non-negative integer \( n \), denoted as \( n! \), is the product of all positive integers less than or equal to \( n \). We'll implement the factorial function using recursion.
+
+#### Pseudocode:
+
+```
+Algorithm: Factorial(n)
+
+Input: A non-negative integer n
+Output: Factorial of n
+
+1. If n equals 0, return 1 (base case).
+2. Otherwise, return n multiplied by Factorial(n-1) (recursive case).
+```
+
+#### Python Implementation:
+
+```python
+def factorial(n):
+    if n == 0:
+        return 1  # Base case
+    else:
+        return n * factorial(n - 1)  # Recursive case
+
+# Example usage
+number = 5
+print("Factorial of", number, ":", factorial(number))  # Output: Factorial of 5: 120
+```
+
+### Example 2: Fibonacci Sequence by Recursion
+
+The Fibonacci sequence is a series of numbers where each number is the sum of the two preceding ones. We'll implement the Fibonacci sequence using recursion.
+
+#### Pseudocode:
+
+```
+Algorithm: Fibonacci(n)
+
+Input: A non-negative integer n
+Output: nth Fibonacci number
+
+1. If n equals 0, return 0 (base case).
+2. If n equals 1, return 1 (base case).
+3. Otherwise, return the sum of Fibonacci(n-1) and Fibonacci(n-2) (recursive case).
+```
+
+#### Python Implementation:
+
+```python
+def fibonacci(n):
+    if n == 0:
+        return 0  # Base case
+    elif n == 1:
+        return 1  # Base case
+    else:
+        return fibonacci(n - 1) + fibonacci(n - 2)  # Recursive case
+
+# Example usage
+term = 7
+print("7th Fibonacci number:", fibonacci(term))  # Output: 7th Fibonacci number: 13
+```
+
+### Example 3: Tower of Hanoi
+
+The Tower of Hanoi is a classic problem where you have three rods and a number of disks of different sizes that can slide onto any rod. The puzzle starts with the disks stacked in ascending order of size on one rod, with the smallest disk at the top and the largest at the bottom.
+
+The objective is to move the entire stack to another rod, obeying the following rules:
+1. Only one disk can be moved at a time.
+2. Each move consists of taking the top disk from one stack and placing it onto another stack.
+3. No disk may be placed on top of a smaller disk.
+
+### Problem Statement:
+
+Given a number of disks and three rods (source, destination, and auxiliary), the task is to move all the disks from the source rod to the destination rod using the auxiliary rod as an intermediate.
+
+### Solution Approach:
+
+Recursion provides an elegant solution to the Tower of Hanoi problem. The recursive algorithm works as follows:
+
+1. **Base Case:** If there is only one disk to move, simply move it from the source rod to the destination rod.
+2. **Recursive Step:** If there are more than one disks, follow these steps:
+   - Move the top \( n-1 \) disks from the source rod to the auxiliary rod, using the destination rod as an auxiliary.
+   - Move the \( n^{th} \) disk from the source rod to the destination rod directly.
+   - Move the \( n-1 \) disks from the auxiliary rod to the destination rod, using the source rod as an auxiliary.
+
+### Implementation:
+
+```python
+def tower_of_hanoi(n, source, destination, auxiliary):
+    if n == 1:
+        print("Move disk 1 from", source, "to", destination)
+        return
+    tower_of_hanoi(n-1, source, auxiliary, destination)
+    print("Move disk", n, "from", source, "to", destination)
+    tower_of_hanoi(n-1, auxiliary, destination, source)
+
+# Example usage
+disks = 3
+tower_of_hanoi(disks, 'A', 'C', 'B')
+```
+
+### Explanation:
+
+In the implementation, the function `tower_of_hanoi` takes four parameters: the number of disks `n`, the source rod `source`, the destination rod `destination`, and the auxiliary rod `auxiliary`.
+
+1. If there is only one disk (`n == 1`), it moves it directly from the source rod to the destination rod.
+2. Otherwise, it recursively moves \( n-1 \) disks from the source rod to the auxiliary rod, then moves the \( n^{th} \) disk from the source rod to the destination rod, and finally recursively moves the \( n-1 \) disks from the auxiliary rod to the destination rod.
+
+### Complexity Analysis:
+
+- The time complexity of the Tower of Hanoi algorithm is \( O(2^n) \), where \( n \) is the number of disks.
+- The space complexity is \( O(n) \) due to the recursive calls stored in the call stack.
+
+### Additional Notes:
+
+- The time complexity of a recursive algorithm depends on the number of recursive calls and the work done within each call.
+- Recursion may lead to stack overflow if the depth of recursion becomes too large.
+- Some recursive problems can be optimized using memoization or dynamic programming techniques.
+- Recursion provides an elegant solution to many problems, especially those with a divide-and-conquer or recursive structure.
+- Understanding recursion is essential for mastering various algorithms and data structures. - However, it requires careful consideration of base cases and termination conditions to avoid infinite recursion.
+
+## 15. Problem Solving with Recursion: Recursive Problems
+
+In this section, we'll explore various recursive problems and how to solve them using recursion. Recursive problems often involve breaking down a larger problem into smaller, similar subproblems, which are then solved recursively.
+
+### Example 1: Sum of Digits
+
+Problem Statement: Given an integer, find the sum of its digits.
+
+#### Approach:
+- Base Case: If the number is less than 10, its sum of digits is itself.
+- Recursive Case: Otherwise, add the last digit to the sum of the digits of the remaining number.
+
+#### Pseudocode:
+```
+Algorithm: SumOfDigits(n)
+
+Input: An integer n
+Output: Sum of digits of n
+
+1. If n is less than 10, return n (base case).
+2. Otherwise, return the last digit of n plus SumOfDigits(floor(n / 10)) (recursive case).
+```
+
+#### Python Implementation:
+```python
+def sum_of_digits(n):
+    if n < 10:
+        return n
+    else:
+        return n % 10 + sum_of_digits(n // 10)
+
+# Example usage
+number = 12345
+print("Sum of digits of", number, ":", sum_of_digits(number))  # Output: Sum of digits of 12345 : 15
+```
+
+### Example 2: Power Function
+
+Problem Statement: Given a base and an exponent, compute the power of the base raised to the exponent.
+
+#### Approach:
+- Base Case: If the exponent is 0, return 1.
+- Recursive Case: Otherwise, compute the power recursively by multiplying the base with the result of the power function with the exponent decremented.
+
+#### Pseudocode:
+```
+Algorithm: Power(base, exponent)
+
+Input: Base and exponent (both integers)
+Output: Result of base raised to exponent
+
+1. If exponent is 0, return 1 (base case).
+2. Otherwise, return base times Power(base, exponent - 1) (recursive case).
+```
+
+#### Python Implementation:
+```python
+def power(base, exponent):
+    if exponent == 0:
+        return 1
+    else:
+        return base * power(base, exponent - 1)
+
+# Example usage
+base = 2
+exponent = 3
+print("Power of", base, "raised to", exponent, ":", power(base, exponent))  # Output: Power of 2 raised to 3 : 8
+```
+
+### Example 3: Binary Search
+
+Problem Statement: Given a sorted array and a target value, find the index of the target value using binary search.
+
+#### Approach:
+- Base Case: If the array is empty, return -1.
+- Recursive Case: Otherwise, compare the target value with the middle element of the array. If they are equal, return the middle index. If the target is smaller, search the left half recursively. If the target is larger, search the right half recursively.
+
+#### Pseudocode:
+```
+Algorithm: BinarySearch(array, target, start, end)
+
+Input: Sorted array, target value, start index, end index
+Output: Index of target value in the array (or -1 if not found)
+
+1. If start is greater than end, return -1 (base case).
+2. Compute middle index as (start + end) // 2.
+3. If target is equal to middle element, return middle index.
+4. If target is less than middle element, search left half recursively.
+5. If target is greater than middle element, search right half recursively.
+```
+
+#### Python Implementation:
+```python
+def binary_search(arr, target, start, end):
+    if start > end:
+        return -1
+    mid = (start + end) // 2
+    if arr[mid] == target:
+        return mid
+    elif target < arr[mid]:
+        return binary_search(arr, target, start, mid - 1)
+    else:
+        return binary_search(arr, target, mid + 1, end)
+
+# Example usage
+sorted_array = [1, 3, 5, 7, 9, 11, 13, 15]
+target_value = 11
+print("Index of", target_value, ":", binary_search(sorted_array, target_value, 0, len(sorted_array) - 1))
+# Output: Index of 11 : 5
+```
+
+### Summary:
+
+Recursive problem-solving involves breaking down a problem into smaller, similar subproblems, which are then solved recursively. By identifying base cases and defining recursive cases, we can implement efficient recursive algorithms for a variety of problems.

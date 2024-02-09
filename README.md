@@ -1,5 +1,5 @@
 # IntroductionToComputerScience
-Basics of Computer Science - Generated through ChatGPT
+Basics of Computer Science - Generated with help from ChatGPT
 
 ## 1. Operator Precedence
 

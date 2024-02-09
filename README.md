@@ -41,7 +41,7 @@ Explanation: Following operator precedence, first, `2 ** 2` is evaluated which r
 
 ### Practice Problems:
 
-1. Evaluate the expression: `(10 - 2) * 5 / 3 + 8`
+1. Evaluate the expression: `(10 - 2) * 5 / 3 + 8`\
     21.33
 2. Write a Python function that takes an arithmetic expression as input and returns the result after evaluating it according to operator precedence.
 

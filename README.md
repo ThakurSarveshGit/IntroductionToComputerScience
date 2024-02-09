@@ -35,13 +35,14 @@ What is the result of `5 * 3 + 2 ** 2 - 9 / 3`?
 a) 5 \
 b) 10 \
 c) 17 \
-d) 14 (Correct)
+d) 16 (Correct)
 
-Explanation: Following operator precedence, first, `2 ** 2` is evaluated which results in `4`. Then `9 / 3` is evaluated as `3`. After that, multiplication and division are performed from left to right, followed by addition and subtraction. Hence, the result is `14`.
+Explanation: Following operator precedence, first, `2 ** 2` is evaluated which results in `4`. Then `9 / 3` is evaluated as `3`. After that, multiplication and division are performed from left to right, followed by addition and subtraction. Hence, the result is `16`.
 
 ### Practice Problems:
 
 1. Evaluate the expression: `(10 - 2) * 5 / 3 + 8`
+    21.33
 2. Write a Python function that takes an arithmetic expression as input and returns the result after evaluating it according to operator precedence.
 
 Feel free to attempt the practice problems and ask for solutions or further explanation!

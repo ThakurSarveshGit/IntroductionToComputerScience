@@ -1467,7 +1467,7 @@ print("Index of", target_value, ":", binary_search(sorted_array, target_value, 0
 
 
 
-## 16. Importing in Python & __name__ == "__main__" usage
+## 16. Importing in Python & `__name__ == "__main__"` usage
 
 **Importing User-Defined Functions and Understanding the if \_\_name\_\_ == "\_\_main\_\_" Syntax**
 

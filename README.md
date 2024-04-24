@@ -1465,6 +1465,70 @@ print("Index of", target_value, ":", binary_search(sorted_array, target_value, 0
 # Output: Index of 11 : 5
 ```
 
+
+
+## 16. Importing in Python & `__name__ == "__main__"` usage
+
+**Importing User-Defined Functions and Understanding the if \_\_name\_\_ == "\_\_main\_\_" Syntax**
+
+In Python, you can organize your code into multiple files for better modularity and organization. You can then import functions or variables defined in one file (module) into another file. Let's explore how to do this using the provided example in src directory.
+
+### Importing Functions:
+
+To import functions from one Python file to another, follow these steps:
+
+1. **Define the Function**: In the source file (`utilityOne.py`), define the function as usual.
+2. **Import the Function**: In the destination file (`main.py`), import the function using the `import` statement followed by the name of the source file (without the `.py` extension) and the function name.
+3. **Accessing Imported Functions**: Once imported, you can access the imported functions using dot notation (`module_name.function_name`).
+
+### Example:
+
+Consider the following example to illustrate the import of user-defined functions:
+
+**main.py**
+```python
+# Main File
+from utilityOne import MainFunction, GetRandomText
+
+# This will overwrite MainFunction from utilityOne.py
+def MainFunction(text):
+    if text is None:
+        print("Main Function Called")
+    else:
+        print(text)
+
+
+# Following will only execute when this file is directly run
+if __name__ == "__main__":
+    # From this file
+    debugText = "This text will only show up when you run main.py directly"
+    MainFunction(debugText)
+
+    # Using an imported function
+    MainFunction(GetRandomText())
+```
+
+**utilityOne.py**
+```python
+import random
+import string
+
+def MainFunction(text):
+    print("I can put in anything here, but it will be overwritten when main.py imports me")
+    print("This is because there's an overriding function with the same name present")
+
+def GetRandomText():
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=100))
+
+if __name__ == "__main__":
+    print("Testing GetRandomText(): \n", GetRandomText())
+```
+
+In this example:
+- We import the `MainFunction` and `GetRandomText` functions from the `utilityOne` module into `main.py`.
+- We overwrite the `MainFunction` from `utilityOne.py` with a new definition in `main.py`.
+- When `main.py` is run directly, the code inside the `if __name__ == "__main__":` block is executed. This includes calling both the overwritten `MainFunction` and the imported `GetRandomText` functions.
+
 ### Summary:
 
 Recursive problem-solving involves breaking down a problem into smaller, similar subproblems, which are then solved recursively. By identifying base cases and defining recursive cases, we can implement efficient recursive algorithms for a variety of problems.

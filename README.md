@@ -1531,3 +1531,92 @@ In this example:
 - We import the `MainFunction` and `GetRandomText` functions from the `utilityOne` module into `main.py`.
 - We overwrite the `MainFunction` from `utilityOne.py` with a new definition in `main.py`.
 - When `main.py` is run directly, the code inside the `if __name__ == "__main__":` block is executed. This includes calling both the overwritten `MainFunction` and the imported `GetRandomText` functions.
+
+
+# Miscalleneous Topics
+
+### M1. Reading from a file
+
+```python
+def read_from_a_file(file_name):
+    content_formatted = []
+
+    with open(file_name, 'r') as f:
+        all_lines = f.readlines()
+        # Now every line in all_lines list contains "\n", this needs to be handled
+        for line in all_lines:
+            formated_line = line.rstrip()
+            # use split if required to break a string based on a delimiter like " ", "." etc
+            line_splitted = formated_line.split(" ")
+            content_formatted.append(line_splitted)
+    return content_formatted
+
+
+if __name__ == "__main__":
+    file_path = "../data/sample_file.txt" # This can be anything, so never hardcode, read from arguments in a function
+
+    print(read_from_a_file(file_path))
+    # Output: [['WHAT', 'IS', 'IN', 'THE', 'NAME?'], ['THIS', 'IS', 'A', 'SAMPLE', 'FILE'], ['NUMBERS', 'WILL', 'ALSO', 'BE', 'READ', 'AS', 'STRING']]
+```
+
+### M2. Dynamic Programming - Example 1
+
+#### Leetcode: https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/
+
+```python
+
+class Solution:
+
+    def maxProfit(self, prices: List[int]) -> int:
+        # Approach: Let's create an array which will store the most profit we can make by selling on a day
+        # This process of storing intermediate results is memoization
+
+        # Initializing memo as empty list, each index corresponds to the day, and 
+        # it's value represents the max profit we achieve by selling on that day.
+        if len(prices) <= 1:
+            return 0
+
+        memo = [-1]*len(prices)
+        lowest_cost_price = prices[0]
+
+        for i in range(1, len(prices)):
+            price = prices[i]
+            lowest_cost_price = min(lowest_cost_price, price) # Is it a good day to buy?
+            memo[i] = max(memo[i-1], price - lowest_cost_price) # Is it a good day to sell?
+        
+        
+        return memo[-1]
+
+    def maxProfitNoDP(self, prices: List[int]) -> int:
+        # it's easier to approach this question without DP, but above solution is given as an example of DP implementation
+        maxProfit = -1000000 # small number
+        lowest_cost_price = 1000000 # large number
+
+        for price in prices:
+            lowest_cost_price = min(lowest_cost_price, price) # Is it a good day to buy?
+            maxProfit = max(maxProfit, price - lowest_cost_price) # Is it a good day to sell?
+        
+        return maxProfit
+
+```
+
+### M2. Dynamic Programming - Example 2
+#### Leetcode: https://leetcode.com/problems/unique-paths/description/
+
+```python
+class Solution:
+
+    def uniquePaths(self, m: int, n: int) -> int:
+        # Initialize a 2D memo grid with all values set to 1
+        # Why 1? Each cell in the grid is also part of the path, therefore initialized with 1.
+        memo = [[1] * n for _ in range(m)] # m x n grid
+
+        # Update grid: Add the number of ways to reach the cell from the left and from above.
+        for i in range(1, m):
+            for j in range(1, n):
+                memo[i][j] = memo[i-1][j] + memo[i][j-1] # left + above
+
+        # The bottom right cell now contains all the possible paths to reach it.
+        return memo[m-1][n-1]
+```
+
